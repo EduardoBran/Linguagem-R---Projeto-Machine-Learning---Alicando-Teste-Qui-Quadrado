@@ -8,7 +8,7 @@ getwd()
 
 ##########       Projeto Machine Learning - Teste Qui Quadrado       ########## 
 
-# - Abordaremos o Teste do Qui-Quadrado para analisar e interpretar a relação entre variáveis categóricas.
+# - Abordaremos o Teste do Qui-Quadrado para analisar e interpretar a relação entre variáveis categóricas (qualitativas).
 
 # - Considere um conjunto de dados com registros de imóveis em diversas cidades pelo Brasil. Cada registro contém informações
 #   como preço do imóvel, tamanho, tipo do imóvel, status do imóvel, se está ou não alugado, entre outras informações.
@@ -28,7 +28,7 @@ getwd()
 #   observadas e as esperadas em cada categoria forem muito pequenas, próximas a zero. Ou seja, se a probabilidade é muito baixa,
 #   ele fornece fortes evidências de que as duas variáveis estão associadas.
 
-# Trabalhamos com 2 hipóteses:
+# Trabalharemos com 2 hipóteses:
 
 # -> Hipótese nula: As frequências observadas não são diferentes das frequências esperadas. Não existe diferença entre as
 #    frequências (contagens) dos grupos. Portanto, não há associação entre os grupos.
@@ -39,6 +39,101 @@ getwd()
 
 
 # Carregando pacotes
+
+library(tidyverse) # manipulação de dados
+library(dplyr)     # manipulação de dados
+library(corrplot)  # criar gráfico de mapa de correlação
+library(ggplot2)   # criar outros gráficos (especificamente de dispersão)
+library(caret)     # usado em tarefas de classificação e regressão para simplificar o processo de treinamento de modelos
+
+
+
+
+# Carregando e interpretando os dados
+
+dados <- as.data.frame(read_csv("dados.csv"))
+
+head(dados)
+View(dados)
+
+# - Cada linha representa um imóvel.
+# - Observando as variávels "Tipo_Imovel" e "Status_Imovel", podemos considerar que elas tem alguma relação?
+#   Isso poderia inclusive explicar as variáveis "Preco" ou "Status_Imovel" ?
+# - Para responder esta pergunta, teremos que aplicar um teste estatístico.
+
+# - Porém, estas variáveis são do tipo categóricas (ou seja, elas possuem classes/categorias) e por conta disso precisaremos
+#   de um teste estatístico apropriado para este tipo de dado. E para este exemplo, o Teste do Qui Quadrado é o ideal.
+#   Lembrando que este não é o único teste para variáveis categóricas (mas é um dos mais comuns e úteis)
+
+# - Problema de negócio -> Há alguma associação entre as variáveis "Tipo_Imovel" e "Status_Imovel" ?
+#                          Caso haja uma relação, é provável que explique "Preco" ou "Status_Imovel".
+#                          E caso não haja relação? Isso ainda explicaria "Preco" ou "Status_Imovel" ?
+
+# - No fim das contas estamos interpretando/compreendendo os dados como estão organizados. Logo, iremos aplicar um teste para
+#   verificar se duas variáveis categóricas estão ou não relacionadas e com base neste resultado iremos compreender um pouco
+#   melhor "Preco" e "Status_Aluguel". Resumindo: iremos fazer uma rápida análise exploratória, aplicar o teste e interpreta-lo.
+
+# - O mais importante é a interpretação do teste!
+
+
+# - Voltando a olhar nossos dados precisamos lembrar semrpe que:
+
+# -> Todo teste estatístico pode ter uma ou mais suposições.
+
+# -> No caso do Teste do Qui Quadrado a suposição mais importante é: as variáveis devem ser independentes!
+
+# -> Agora ao observar nosso dados novamente, a pergunta é: as variáveis "Tipo_Imovel" e "Status_Imovel" são independentes?
+#    Como um "Tipo_Imovel" pode ser "antigo" ou "novo" tal como em "Status_Imovel", isso signifca que as variáveis são sim
+#    independentes.
+
+
+
+#### Análise Exploratória dos Dados
+
+
+# verificando valores ausentes nas colunas
+colSums(is.na(dados))
+
+# Dimensões (nº de linhas e colunas)
+dim(dados)
+
+# Verificando tipos de dados
+str(dados)
+
+# Sumário estatístico
+summary(dados)
+
+
+
+# Extraindo as variáveis para x e y
+# (divisão é feita para preparar as variáveis "x" e "y" que serão usadas no teste Qui-Quadrado para avaliar a associação
+# entre "Tipo_Imovel" e "Status_Imovel". )
+
+x = dados$Tipo_Imovel
+head(x)
+unique(x)
+
+y = dados$Status_Imovel
+head(y)
+unique(y)
+
+
+# Calculando tabela cruzada com as variáveis x ("Tipo_Imovel") e y ("Status_Imovel")
+
+# - Isso é feito para cruzar cada categoria de uma variável com as categorias de outra variável.
+#   No nosso caso tempos 2901 Apartamentos Antigos e 990 Novo
+
+table(x, y)
+
+# Observando valores acima em porcentual (arrdondado para 3 casas decimais)
+
+round(prop.table(table(x, y)), 3)
+
+
+
+
+
+
 
 
 
