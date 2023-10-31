@@ -118,7 +118,7 @@ head(y)
 unique(y)
 
 
-# Calculando tabela cruzada com as variáveis x ("Tipo_Imovel") e y ("Status_Imovel")
+# Calculando tabela cruzada (ou tabela de contingência) com as variáveis x ("Tipo_Imovel") e y ("Status_Imovel")
 
 # - Isso é feito para cruzar cada categoria de uma variável com as categorias de outra variável.
 #   No nosso caso tempos 2901 Apartamentos Antigos e 990 Novo
@@ -137,6 +137,31 @@ round(prop.table(table(x, y)), 3)
 # Hipotese Alternativa - H1 -> Há relação entre x e y
 
 # Ou seja, se o valor-p for menor que 0.05, rejeitaremos a H0
+
+
+## Teste do Qui-Quadrado
+
+chisq.test(table(x, y))
+
+# 	Pearson's Chi-squared test
+
+# data:  table(x, y)
+# X-squared = 868.75, df = 4, p-value < 2.2e-16
+
+
+## Interpretando o resultado do teste
+
+# Com base nesses resultados, podemos interpretar da seguinte forma:
+  
+# - A hipótese nula (H0), que afirma que não há relação entre as variáveis "Tipo_Imovel" e "Status_Imovel," é rejeitada.
+# - O valor-p extremamente baixo (p-value < 0.05) indica que há uma relação estatística significativa entre as variáveis
+#   "Tipo_Imovel" e "Status_Imovel."
+
+# Portanto, com base no resultado do teste Qui-Quadrado, podemos afirmar que existe uma associação significativa entre o
+# tipo de imóvel ("Tipo_Imovel") e o status do imóvel ("Status_Imovel"). Isso significa que essas duas variáveis não são
+# independentes, e há uma relação estatisticamente significativa entre elas.
+
+
 
 
 
