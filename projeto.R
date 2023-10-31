@@ -131,6 +131,15 @@ round(prop.table(table(x, y)), 3)
 
 
 
+## Definindo as Hipóteses (só assim conseguiremos interpretar os resultados, caso contrário serão apenas números)
+
+# Hipótese Nula        - H0 -> Não há relação entre x e y
+# Hipotese Alternativa - H1 -> Há relação entre x e y
+
+# Ou seja, se o valor-p for menor que 0.05, rejeitaremos a H0
+
+
+
 
 
 
