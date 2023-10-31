@@ -153,7 +153,7 @@ chisq.test(table(x, y))
 
 # Com base nesses resultados, podemos interpretar da seguinte forma:
   
-# - A hipótese nula (H0), que afirma que não há relação entre as variáveis "Tipo_Imovel" e "Status_Imovel," é rejeitada.
+# - A hipótese nula (H0), que afirma que não há relação entre as variáveis "Tipo_Imovel" e "Status_Imovel", é rejeitada.
 # - O valor-p extremamente baixo (p-value < 0.05) indica que há uma relação estatística significativa entre as variáveis
 #   "Tipo_Imovel" e "Status_Imovel."
 
@@ -163,6 +163,48 @@ chisq.test(table(x, y))
 
 
 
+## Proposta de Exercício
+
+# - Se não considerarmos os imóveis do tipo Apartamento, há diferença no resultado do teste ?
+
+# Antes de responder, devemos questionar porque o problema de negócio é retirar "Apartamento", e observando novamente a
+# tabela cruzada podemos observar que a categoria "Apartamento" é a que tem a maioria dos registros, muito maior que outra
+# categoria, logo é provável que "Apartamento" esteja influenciando no teste e por isso iremos checar sem os registro de 
+# "Apartamento".
+
+# Respota: Sim, pois os argumentos devem ter o mesmo comprimento, logo terei que remover linhas de y e isso irá influenciar
+#          o resultado.
+
+
+
+# Removendo categoria "Apartamento" de "Tipo_Imovel"
+
+dim(dados)
+dados2 <- droplevels(subset(dados, Tipo_Imovel != "Apartamento"))
+dim(dados2)
+
+
+# Extraindo as variáveis para x e y
+x2 = dados2$Tipo_Imovel
+y2 = dados2$Status_Imovel
+
+
+# Criando tabela cruzada
+table(x2, y2)
+
+
+## Aplicando Teste Qui Quadrado
+chisq.test(table(x2, y2))
+
+
+# Pearson's Chi-squared test
+
+# data:  table(x2, y2)
+# X-squared = 0.79718, df = 3, p-value = 0.8501
+
+# - O valor-p é maior que 0.05. Falhamos em rejeitar a H0.
+#   Com isso, neste cenário onde foi removido todos os imóveis do tipo "Apartamento", as variáveis "Tipo_Imovel" e 
+#   "Status_Imovel" não tem relação estatististicamente significativa.
 
 
 
